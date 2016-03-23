@@ -19,6 +19,7 @@
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:f="http://java.sun.com/jsf/core"
    xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:pr="http://primefaces.org/ui"	
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
       <h1>Welcome to JBoss!</h1>
@@ -28,7 +29,9 @@
          <h3>Your application can run on:</h3>
          <img src="resources/gfx/dualbrand_as7eap.png"/>
       </div>
-
+      
+      <pr:spinner/>
+		
       <h:form id="reg">
          <h2>Member Registration</h2>
          <p>Enforces annotation-based constraints defined on the model class.</p>
@@ -86,6 +89,7 @@
       <a href="#{request.contextPath}/views/proveedores/proveedores.jsf"><h2>Proveedores</h2></a>
       <a href="#{request.contextPath}/views/productos/productos.jsf"><h2>Productos</h2></a>
       <a href="#{request.contextPath}/views/clientes/clientes.jsf"><h2>Clientes</h2></a>
+      <a href="#{request.contextPath}/views/compras/listaprovproductos.jsf"><h2>Comprar</h2></a>
       
    </ui:define>
 </ui:composition>

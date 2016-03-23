@@ -38,6 +38,14 @@
          <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
       </license>
    </licenses>
+   
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>Prime Repo</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
 
    <dependencies>
 
@@ -91,6 +99,12 @@
                </exclusion>
            </exclusions>
        </dependency>
+       
+        <dependency>
+	        <groupId>org.primefaces.extensions</groupId>
+	        <artifactId>primefaces-extensions</artifactId>
+        <version>4.0.0</version>
+    </dependency>
 
    </dependencies>
 

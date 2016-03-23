@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    JBoss, Home of Professional Open Source
+    Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+    contributors by the @authors tag. See the copyright.txt in the
+    distribution for a full listing of individual contributors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:pr="http://primefaces.org/ui"	
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1>Comprar Productos</h1>
+		<a href="#{request.contextPath}/index.jsf"><h5>Atras</h5></a>
+      <div>
+         
+      </div>
+      <h:form id="CreateComprasForm">
+      	<h:panelGrid id="formCompra"  columns="3" style="width:100%;">
+                <h:outputLabel value="Proveedor" />
+                <h:selectOneMenu value="#{compraController.proveedorId}" converter="javax.faces.Long"
+                                 id="proveedorCompra" maxlength="50" style="width:100%;height:100%"
+                                 required="true" requiredMessage="Describa el Proveedor">
+
+                    <f:selectItem itemLabel="Seleccione un Proveedor" itemValue="" noSelectionOption="true" />
+                    <f:selectItems value="#{providers}" var="proov" itemValue="#{proov.id}"
+                                   itemLabel="#{proov.name}"/>
+
+					
+                    <pr:ajax event="change" process="proveedorCompra" update="formCompraDetalle" listener="#{compraController.printR}" /> 
+                </h:selectOneMenu>
+                
+                <h:messages style="margin-left: 15px;" for="proveedorCompra" />
+
+            </h:panelGrid>
+            <br/>
+			
+            <h:panelGrid id="formCompraDetalle"  columns="3" style="width:100%;">
+                <h:outputLabel value="Producto" />
+                <h:selectOneMenu disabled="#{compraController.proveedorId==null}" value="#{compraController.productoId}" converter="javax.faces.Long"
+                                 id="productoCompraDetalle" maxlength="50" style="width:100%;height:100%"
+                                 required="true" >
+
+                    <f:selectItem itemLabel="Seleccione un producto" itemValue="" noSelectionOption="true" />
+					<f:selectItems value="#{compraController.productoByProveedor}" var="prod" itemValue="#{prod.id}"
+                                   itemLabel="#{prod.name}"/>
+                </h:selectOneMenu>
+                <h:messages style="margin-left: 15px;" for="productoCompraDetalle" />
+
+                <h:outputLabel value="Cantidad" />
+                <h:inputText value="#{compraController.cantidad}"
+                             id="cantidadCompraDetalle" maxlength="50" style="width:100%;height:100%"
+                             required="true" requiredMessage="Describa la cantidad del producto" >
+                </h:inputText>
+                <h:commandButton value="Add" id="addCompraDetalle" update=":form:tabla_compras productoCompraDetalle cantidadCompraDetalle listaCompraDetalle formCompraDetalle" process="formCompraDetalle"
+                                 actionListener="#{compraController.addDetalleCompra}" style="margin-left: 15px;" />
+            </h:panelGrid>
+            <br/>
+            <pr:separator />
+            
+            <h2>Productos</h2>
+		      <h:panelGroup rendered="#{empty compraController.detallesCompra}">
+		         <em>No registered products.</em>
+		      </h:panelGroup>
+		      <h:dataTable var="_detallec" value="#{compraController.detallesCompra}" rendered="#{not empty compraController.detallesCompra}" styleClass="simpletablestyle">
+		
+		         <h:column>
+		            <f:facet name="header">Id</f:facet>
+		                #{_detallec.id}
+		            </h:column>
+		         <h:column>
+		            <f:facet name="header">Name</f:facet>
+		                #{_detallec.cantidad}
+		            </h:column>
+		         <h:column>
+		            <f:facet name="header">Cantidad</f:facet>
+		                #{_detallec.producto.name}
+		            </h:column>
+		          <h:column>
+		           		<h:commandButton action="#{compraController.borrarDetalle(_detallec)}" value="Borrar" />
+		         </h:column>
+		      </h:dataTable>
+		      
+		      
+		      <h:panelGrid>
+		      	<h:outputText value="Monto total" />
+		      	<h:inputText value="#{compraController.monto}" />
+		      	<h:commandButton action="#{compraController.doCompra}" value="Crear Compra" />
+		      </h:panelGrid>
+		      
+		      <a href="#{request.contextPath}/views/compras/listacompras.jsf"><h5>Ver Lista de Compras</h5></a>
+ 		</h:form>
+       
+   </ui:define>
+</ui:composition>
