@@ -49,7 +49,7 @@ import py.pol.una.ii.pw.service.CompraDetalleRegistration;
  * <p/>
  * This class produces a RESTful service to read/write the contents of the members table.
  */
-@Path("/comprasdetalless")
+@Path("/comprasdetalles")
 @RequestScoped
 public class ComprasDetallesResourceRESTService {
     @Inject
